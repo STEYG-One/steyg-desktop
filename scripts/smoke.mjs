@@ -83,7 +83,9 @@ try {
 		const snapshot = await evaluate("window.steyg.snapshot()");
 		check("giao diện đọc được trạng thái từ tiến trình chính", snapshot?.gateway?.running === true, `v${snapshot?.version} ${snapshot?.platform}`);
 		check("nhận ra đúng hệ điều hành", snapshot?.platform === (process.platform === "win32" ? "windows" : "mac"), snapshot?.platform);
-		const heading = await evaluate("document.querySelector('h1')?.textContent");
+		// Giao diện vẽ sau khi nhận trạng thái đầu tiên: chờ tiêu đề và phông thay vì đọc ngay.
+		const heading = await until(() => evaluate("document.querySelector('h1')?.textContent"), 15);
+		await evaluate("document.fonts.ready.then(() => true)");
 		check("màn đăng nhập hiện tiêu đề tiếng Việt có dấu", /Nối công cụ AI/.test(heading ?? ""), heading);
 		const font = await evaluate("document.fonts.check('16px Inter') && [...document.fonts].some((f) => f.status === 'loaded')");
 		check("phông Inter đã nạp", font === true);
