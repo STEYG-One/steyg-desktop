@@ -1,0 +1,68 @@
+# Cài bản đã phát hành trên máy Windows và macOS sạch, mở app, kiểm gateway và giao diện, lưu ảnh chụp.
+name: Smoke test installers
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Bản phát hành cần kiểm, ví dụ v0.1.1
+        required: true
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+env:
+  TAG: ${{ inputs.tag || github.event.release.tag_name }}
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Download installer
+        run: gh release download $env:TAG --repo $env:GITHUB_REPOSITORY --pattern "*win-x64.exe" --output installer.exe
+      - name: Silent install
+        run: |
+          $p = Start-Process -FilePath .\installer.exe -ArgumentList "/S" -Wait -PassThru
+          if ($p.ExitCode -ne 0) { throw "installer exit code $($p.ExitCode)" }
+          $exe = Get-ChildItem "$env:LOCALAPPDATA\Programs" -Recurse -Filter "STEYG Desktop.exe" | Select-Object -First 1
+          if (-not $exe) { throw "STEYG Desktop.exe not found after install" }
+          "APP_EXE=$($exe.FullName)" >> $env:GITHUB_ENV
+          Write-Host "Installed at $($exe.FullName)"
+          if (-not (Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu\Programs" -Recurse -Filter "STEYG Desktop.lnk")) { throw "Start menu shortcut missing" }
+      - name: Smoke test
+        run: node scripts/smoke.mjs "$env:APP_EXE" smoke-out
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-screenshots
+          path: smoke-out
+
+  macos:
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Download and mount
+        run: |
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "*mac-arm64.dmg" --output app.dmg
+          hdiutil attach -nobrowse -readonly -mountpoint "$RUNNER_TEMP/mnt" app.dmg
+          cp -R "$RUNNER_TEMP/mnt/STEYG Desktop.app" "$RUNNER_TEMP/"
+          codesign --verify --deep --strict "$RUNNER_TEMP/STEYG Desktop.app"
+      - name: Smoke test
+        run: node scripts/smoke.mjs "$RUNNER_TEMP/STEYG Desktop.app/Contents/MacOS/STEYG Desktop" smoke-out
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: macos-screenshots
+          path: smoke-out
