@@ -16,6 +16,8 @@ Nối Claude Code, Codex CLI và OpenCode với [STEYG Code](https://steyg.one) 
 - **Giữ kết nối**: app chạy một gateway ngay trên máy bạn. Mạng rớt hay nguồn quá tải trong chốc lát thì gateway tự gọi lại trước khi công cụ báo lỗi.
 - **Combo**: xếp vài model theo thứ tự ưu tiên; model đầu lỗi thì app chuyển sang model kế. Mỗi request tính theo model thật sự trả lời.
 - **Xem hạn mức**: số credit còn lại, số request hôm nay, và từng request vừa đi qua.
+- **Chẩn đoán**: gọi thật stream, gọi tool, suy luận, cache prompt và đọc ảnh cho model bạn chọn, rồi báo cái nào chạy kèm mã request để tra.
+- **Chế độ tràn cho Claude Code**: dùng gói Claude của bạn trước; gói chạm giới hạn thì app nối Claude Code sang STEYG để làm tiếp, tới giờ giới hạn mở lại thì trả về gói của bạn.
 - **Khoá an toàn**: khoá API nằm trong kho khoá của hệ điều hành (Keychain trên macOS, DPAPI trên Windows), không nằm trong file cấu hình của công cụ.
 
 Cline, Roo Code, Kilo Code, Cursor và công cụ khác: app đưa sẵn địa chỉ, khoá và tên model để chép vào công cụ.
@@ -73,6 +75,8 @@ Connect Claude Code, Codex CLI and OpenCode to [STEYG Code](https://steyg.one) i
 - **Keeps the stream alive**: a gateway runs on your own computer and retries brief upstream failures before your tool sees an error.
 - **Combos**: list models in priority order; when the first one fails the app moves to the next. Each request is billed for the model that actually answers.
 - **Quota at a glance**: credits remaining, today's requests, and a live request log.
+- **Diagnostics**: calls streaming, tool calls, reasoning, prompt cache and image input for the model you pick and reports what works, with a request ID per check.
+- **Overflow mode for Claude Code**: use your own Claude plan first; when it hits its limit the app connects Claude Code to STEYG so you can keep working, then hands it back when the limit resets.
 - **Your key stays safe**: stored in the system keychain (Keychain on macOS, DPAPI on Windows), not in tool config files.
 
 ## Install
