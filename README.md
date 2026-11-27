@@ -6,8 +6,7 @@ Nối Claude Code, Codex CLI và OpenCode với [STEYG Code](https://steyg.one) 
 
 | Máy của bạn | File cần tải |
 | --- | --- |
-| Mac chip Apple (M1 trở lên) | `STEYG-Desktop-<phiên bản>-mac-arm64.dmg` |
-| Mac chip Intel | `STEYG-Desktop-<phiên bản>-mac-x64.dmg` |
+| Mac (chip Apple hoặc Intel) | `STEYG-Desktop-<phiên bản>-mac-universal.dmg` |
 | Windows 10/11 (64-bit) | `STEYG-Desktop-<phiên bản>-win-x64.exe` |
 
 ## App làm gì
@@ -18,7 +17,7 @@ Nối Claude Code, Codex CLI và OpenCode với [STEYG Code](https://steyg.one) 
 - **Xem hạn mức**: số credit còn lại, số request hôm nay, và từng request vừa đi qua.
 - **Chẩn đoán**: gọi thật stream, gọi tool, suy luận, cache prompt và đọc ảnh cho model bạn chọn, rồi báo cái nào chạy kèm mã request để tra.
 - **Chế độ tràn cho Claude Code**: dùng gói Claude của bạn trước; gói chạm giới hạn thì app nối Claude Code sang STEYG để làm tiếp, tới giờ giới hạn mở lại thì trả về gói của bạn.
-- **Khoá an toàn**: khoá API nằm trong kho khoá của hệ điều hành (Keychain trên macOS, DPAPI trên Windows), không nằm trong file cấu hình của công cụ.
+- **Khoá an toàn**: khoá API nằm trong kho khoá của hệ điều hành (Keychain trên macOS, Credential Manager trên Windows), không nằm trong file cấu hình của công cụ.
 
 Cline, Roo Code, Kilo Code, Cursor và công cụ khác: app đưa sẵn địa chỉ, khoá và tên model để chép vào công cụ.
 
@@ -34,7 +33,7 @@ Cần một khoá API STEYG Code (`sk-steyg-…`). Tạo ở [steyg.one › STEY
 2. Mở app. macOS báo không xác minh được nhà phát triển: bấm **Done**.
 3. Vào **System Settings › Privacy & Security**, kéo xuống cuối, bấm **Open Anyway** cạnh dòng STEYG Desktop, rồi xác nhận.
 
-Từ lần sau app mở bình thường. Trên Mac, khi có bản mới app sẽ báo và đưa bạn về trang này để tải.
+Từ lần sau app mở bình thường và tự cập nhật các bản sau.
 
 ### Windows
 
@@ -45,7 +44,7 @@ App tự cài và tự cập nhật các bản sau.
 
 ## Bắt đầu
 
-1. Dán khoá API vào app, bấm **Đăng nhập bằng khoá**.
+1. Bấm **Đăng nhập bằng trình duyệt** rồi bấm Cho phép trên steyg.one, hoặc dán khoá API và bấm **Đăng nhập bằng khoá**.
 2. Vào **Công cụ**, bấm **Nối** ở công cụ bạn dùng.
 3. Mở Terminal, gõ `claude` (hoặc `codex`, `opencode`) và dùng như thường.
 
@@ -65,8 +64,7 @@ Connect Claude Code, Codex CLI and OpenCode to [STEYG Code](https://steyg.one) i
 
 | Your computer | File to download |
 | --- | --- |
-| Mac with Apple silicon (M1 or later) | `STEYG-Desktop-<version>-mac-arm64.dmg` |
-| Mac with Intel | `STEYG-Desktop-<version>-mac-x64.dmg` |
+| Mac (Apple silicon or Intel) | `STEYG-Desktop-<version>-mac-universal.dmg` |
 | Windows 10/11 (64-bit) | `STEYG-Desktop-<version>-win-x64.exe` |
 
 ## What it does
@@ -77,7 +75,7 @@ Connect Claude Code, Codex CLI and OpenCode to [STEYG Code](https://steyg.one) i
 - **Quota at a glance**: credits remaining, today's requests, and a live request log.
 - **Diagnostics**: calls streaming, tool calls, reasoning, prompt cache and image input for the model you pick and reports what works, with a request ID per check.
 - **Overflow mode for Claude Code**: use your own Claude plan first; when it hits its limit the app connects Claude Code to STEYG so you can keep working, then hands it back when the limit resets.
-- **Your key stays safe**: stored in the system keychain (Keychain on macOS, DPAPI on Windows), not in tool config files.
+- **Your key stays safe**: stored in the system keychain (Keychain on macOS, Credential Manager on Windows), not in tool config files.
 
 ## Install
 
@@ -85,7 +83,7 @@ You need a STEYG Code API key (`sk-steyg-…`): create one at [steyg.one › STE
 
 This is an **unsigned** beta, so the operating system asks once on first launch.
 
-- **macOS**: open the `.dmg`, drag the app to Applications and open it. When macOS says it cannot verify the developer, click **Done**, go to **System Settings › Privacy & Security**, scroll down and click **Open Anyway**. On Mac the app tells you when a new version is out and sends you here to download it.
+- **macOS**: open the `.dmg`, drag the app to Applications and open it. When macOS says it cannot verify the developer, click **Done**, go to **System Settings › Privacy & Security**, scroll down and click **Open Anyway**. The app updates itself afterwards.
 - **Windows**: run the `.exe`. On "Windows protected your PC", click **More info**, then **Run anyway**. The app updates itself afterwards.
 
 ## Support
